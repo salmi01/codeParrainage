@@ -15,7 +15,7 @@ export const getOffersByCategory = (category: string) => catalog.filter(offer =>
 
 export function offerCardData(offer: ReferralOffer) {
   const status = statusOf(offer);
-  return { slug: offer.slug, title: offer.brandName, description: status === "active" ? offer.bonusSummary : offer.description,
+  return { slug: offer.slug, title: offer.editorial?.shortTitle ?? offer.brandName, description: status === "active" ? offer.bonusSummary : offer.description,
     status, eligibilityCountries: offer.eligibilityCountries };
 }
 export type OfferCardData = ReturnType<typeof offerCardData>;

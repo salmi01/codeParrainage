@@ -13,7 +13,7 @@ export const metadata = pageMeta("Rechercher sur CodeParrainage", "Retrouvez une
 export const revalidate = 3600;
 export default function Page() {
   const entries: SearchEntry[] = [
-    ...getOffers().map(o => ({ title: o.brandName, description: o.description, href: "/" + o.slug, keywords: o.title,
+    ...getOffers().map(o => ({ title: o.brandName, description: o.description, href: "/" + o.slug, keywords: [o.title, o.editorial?.seoTitle].join(" "),
       kind: "Offre" as const, eligibleResidences: statusOf(o) === "active" ? o.eligibilityCountries : [] })),
     ...sections.map(s => ({ title: s.title, description: s.description, href: "/" + s.slug, kind: "Catégorie" as const })),
     ...articles.map(a => ({ title: a.title, description: a.description, href: articleUrl(a),

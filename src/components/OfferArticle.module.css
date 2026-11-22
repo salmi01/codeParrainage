@@ -1,0 +1,43 @@
+.hero { display: grid; grid-template-columns: minmax(0,1.25fr) minmax(0,1fr); gap: clamp(2rem,5vw,5rem); align-items: center; padding-block: 2.4rem; }
+.heading > a { display: inline-flex; align-items: center; gap: .5rem; }
+.heading h1 { font: 400 clamp(2.6rem,4.5vw,4.3rem)/1.04 var(--serif); letter-spacing: -.05em; margin-block: .8rem 1.1rem; }
+.heading > p { color: var(--muted); font-size: 1.08rem; max-width: 55ch; line-height: 1.65; margin-bottom: 1.2rem; }
+.card { background: #edf4e9; border: 1px solid #cfddcb; border-radius: 18px; padding: clamp(1.2rem,2.4vw,2rem); }
+.market { font-size: .9rem; font-weight: 600; color: var(--green); }
+.article .card h2 { font: 400 clamp(2.5rem,4vw,3.8rem)/1.05 var(--serif); margin: .65rem 0; color: var(--green); }
+.card h2 span { display: block; font: 600 1rem/1.5 var(--font-sans); letter-spacing: normal; color: var(--ink); }
+.card > p { font-size: .94rem; }
+.threshold { margin-top: .85rem; }
+.card small, .body small { font-size: .84rem; color: var(--muted); }
+.card :global(.referral-box) { border-top: 1px solid #cad9c8; padding-top: 1rem; }
+.card :global(.code-line) { width: 100%; justify-content: space-between; gap: .5rem; }
+.card code { font-weight: 700; font-size: 1.1rem; }
+.card button { min-height: 44px; flex-shrink: 0; }
+.official, .links a { color: var(--green); text-decoration: underline; text-underline-offset: .2em; font-weight: 500; }
+.official { display: inline-flex; align-items: center; gap: .45rem; margin-top: .9rem; font-size: .94rem; }
+.toc, .links { display: flex; align-items: center; flex-wrap: wrap; gap: .5rem 1.6rem; }
+.toc { padding: .5rem 0; border-block: 1px solid var(--line); }
+.toc a { padding-block: .55rem; color: var(--green); font-size: .93rem; }
+.body { max-width: 830px; }
+.article .body h2 { margin-top: 2.4rem; }
+.facts { border-collapse: collapse; width: 100%; font-size: .97rem; }
+.facts th, .facts td { border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; padding: .7rem .9rem; }
+.facts th { width: 31%; background: #f1f5ee; font-weight: 600; }
+.links { margin-top: 1.25rem; }
+.article :global(.residence-note) { padding: .85rem 1rem; background: #faf3e1; margin-bottom: 1rem; }
+@media (max-width: 760px) {
+  .hero { grid-template-columns: 1fr; gap: 1.25rem; padding-block: 1.4rem; }
+  .heading h1 { font-size: clamp(2.15rem,8vw,3.1rem); }
+  .heading > p { font-size: 1rem; margin-bottom: .6rem; }
+  .card { padding: 1rem; }
+  .card :global(.code-line) { flex-wrap: wrap; }
+  .toc { gap: 0 1.1rem; }
+  .facts th, .facts td { padding: .6rem; }
+  .facts th { width: 35%; }
+}
+@media (max-width: 360px) {
+  .hero { gap: .8rem; padding-block: .9rem; }
+  .heading h1 { font-size: 2.05rem; margin: .5rem 0 .7rem; }
+  .card :global(.code-line) { padding: .4rem; }
+  .card button { font-size: .85rem; padding-inline: .6rem; }
+}

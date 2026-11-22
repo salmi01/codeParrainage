@@ -32,6 +32,10 @@ export const offerSchema = z.object({
   // Références internes de confirmation, conservées uniquement côté serveur.
   ownerConfirmation: text.optional(), publicSharingEvidence: text.optional(),
   disclosure: text.optional(), faq: z.array(z.object({ question: text, answer: text })).optional(),
+  editorial: z.object({
+    seoTitle: text, shortTitle: text, market: text, discount: text, answer: text,
+    minimumNote: text, observation: text, officialSite: secureUrl,
+  }).optional(),
 }).strict().superRefine((offer, ctx) => {
   const issue = (message: string) => ctx.addIssue({ code: "custom", message });
   const today = new Date().toISOString().slice(0, 10);

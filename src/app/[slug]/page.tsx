@@ -1,7 +1,9 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { PageFrame } from "@/components/PageFrame";
-import { OfferPage } from "@/components/OfferPage";
+import { FAQSection, OfferPage } from "@/components/OfferPage";
+import { OfferArticle } from "@/components/OfferArticle";
+import { sections } from "@/lib/routes";
 import { pageMeta } from "@/lib/seo";
 import { info, isInfo } from "@/lib/info";
 import { getOffers, getOfferBySlug, statusOf } from "@/lib/offers";
@@ -16,7 +18,7 @@ export async function generateMetadata({ params }: Props) {
   if (isInfo(slug)) { const p = info[slug]; return pageMeta(p.title, p.description, "/" + slug, p.index); }
   const o = getOfferBySlug(slug);
   if (!o) notFound();
-  return pageMeta(o.title, o.description, "/" + slug, statusOf(o) === "active");
+  return pageMeta(o.editorial?.seoTitle ?? o.title, o.description, "/" + slug, statusOf(o) === "active", Boolean(o.editorial));
 }
 export default async function Page({ params }: Props) {
   const { slug } = await params;
@@ -32,5 +34,11 @@ export default async function Page({ params }: Props) {
   }
   const offer = getOfferBySlug(slug);
   if (!offer) notFound();
+  const category = sections.find(s => s.slug === offer.category);
+  if (offer.editorial && category && statusOf(offer) === "active") {
+    return <OfferArticle offer={offer} edition={offer.editorial} category={{ label: category.title, href: "/" + category.slug }}>
+      {offer.faq?.length ? <FAQSection items={offer.faq}/> : null}
+    </OfferArticle>;
+  }
   return <OfferPage offer={offer}/>;
 }
