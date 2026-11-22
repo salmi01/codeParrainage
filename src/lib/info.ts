@@ -6,9 +6,9 @@ export const info: Record<typeof institutionalSlugs[number], Info> = {
   methode: {
     title: "Notre méthode de vérification", description: "Comment nous établissons l’avantage du filleul, les conditions applicables et le droit de diffuser une invitation.", index: true,
     sections: [
-      { heading: "Consulter les conditions officielles", body: "Nous consultons les conditions publiées par le fournisseur pour vérifier ce que reçoit le filleul, les étapes à suivre et la période de validité de l’offre." },
+      { heading: "Identifier l’offre, puis vérifier ses conditions", body: "Nous partons des codes et des offres documentés sur BonusFoundry, un site du même éditeur que CodeParrainage.co. Nous consultons ensuite les conditions officielles du fournisseur pour vérifier qui peut en bénéficier, quelles étapes suivre et quand utiliser la récompense." },
       { heading: "Vérifier le pays et le bénéficiaire", body: "Nous distinguons le pays de résidence du pays de départ et de la destination d’un transfert. La fiche précise séparément ce que peut recevoir la personne invitée et ce que peut recevoir le parrain." },
-      { heading: "Contrôler chaque invitation", body: "Avant de publier un code ou un lien, nous confirmons son attribution auprès du propriétaire et vérifions que le programme permet de le diffuser publiquement sur CodeParrainage.co." },
+      { heading: "Contrôler chaque invitation", body: "Nous confirmons à qui appartient le code ou le lien et examinons les règles de partage du programme. Chaque fiche précise l’avantage que l’éditeur peut recevoir si vous utilisez son invitation." },
       { heading: "Dater la vérification", body: "Chaque fiche indique les sources consultées. Lorsqu’un avantage a été vérifié, nous précisons à quelle date. Si l’offre a expiré ou si ses conditions restent à confirmer, nous le signalons sur la fiche." },
     ],
   },

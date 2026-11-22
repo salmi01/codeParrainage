@@ -26,6 +26,7 @@ export const offerSchema = z.object({
   bonusSummary: text, benefitToInvitee: text.optional(), benefitToReferrer: text.optional(),
   referralCode: text.optional(), referralUrl: secureUrl.optional(), officialUrl,
   eligibilityCountries: countries, sendingCountries: countries.optional(), receivingCountries: countries.optional(),
+  geographicScopeNote: text.optional(),
   currency: z.string().regex(/^[A-Z]{3}$/).optional(), minimumTransfer: text.optional(),
   conditions: z.array(text), sources: z.array(source),
   verifiedAt: date.optional(), expiresAt: date.optional(), updatedAt: date,
@@ -53,7 +54,7 @@ export const offerSchema = z.object({
     const evidenceDate = offer.verifiedAt;
     if (!evidenceDate || !offer.sources.some(s => s.url === offer.officialUrl && s.checkedAt >= evidenceDate))
       issue("Une offre active exige des règles officielles contrôlées à la date de la preuve ou ultérieurement");
-    if (!offer.eligibilityCountries.length || !offer.conditions.length || !offer.benefitToInvitee)
+    if ((!offer.eligibilityCountries.length && !offer.geographicScopeNote) || !offer.conditions.length || !offer.benefitToInvitee)
       issue("Éligibilité, avantage du filleul et conditions requis");
     if (!offer.referralCode && !offer.referralUrl) issue("Code ou lien personnel requis");
     if (offer.expiresAt && offer.verifiedAt && offer.expiresAt < offer.verifiedAt) issue("Expiration antérieure à la vérification");

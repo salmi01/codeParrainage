@@ -27,8 +27,9 @@ export function OfferArticle({ offer, edition, category, children }: {
     ["Avantage du filleul", offer.benefitToInvitee],
     ["Code personnel", offer.referralCode],
     ["Résidence du filleul", offer.eligibilityCountries.map(countryName).join(", ")],
+    ["Pays concernés", offer.geographicScopeNote],
     ["Pays d’envoi documenté", offer.sendingCountries?.map(countryName).join(", ")],
-    ["Minimum de l’offre", minimum && `${minimum} en un seul envoi. ${edition.minimumNote}`],
+    ["Minimum de l’offre", minimum ? `${minimum} en un seul envoi. ${edition.minimumNote}` : edition.minimumNote],
     ...(edition.extraFacts ?? []).map(fact => [fact.label, fact.value]),
     ["Validation", edition.validationNote ?? "La remise doit figurer dans le récapitulatif avant le paiement."],
     ["Avantage du parrain", offer.benefitToReferrer],
@@ -49,7 +50,7 @@ export function OfferArticle({ offer, edition, category, children }: {
         <a href={edition.officialSite} className={styles.official}>Site officiel de {offer.brandName} <ExternalLink size={15} aria-hidden/></a>
       </section>
     </header>
-    <OfferResidenceNote eligible={offer.eligibilityCountries}/>
+    <OfferResidenceNote eligible={offer.eligibilityCountries} scopeNote={offer.geographicScopeNote}/>
     <nav className={styles.toc} aria-label="Sur cette fiche">
       <a href="#reperes">L’offre en bref</a><a href="#utilisation">Mode d’emploi</a><a href="#conditions">Conditions</a>
       {Boolean(offer.faq?.length) && <a href="#questions">Questions fréquentes</a>}<a href="#sources">Sources</a>
