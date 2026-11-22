@@ -29,7 +29,8 @@ export function OfferArticle({ offer, edition, category, children }: {
     ["Résidence du filleul", offer.eligibilityCountries.map(countryName).join(", ")],
     ["Pays d’envoi documenté", offer.sendingCountries?.map(countryName).join(", ")],
     ["Minimum de l’offre", minimum && `${minimum} en un seul envoi. ${edition.minimumNote}`],
-    ["Validation", "La remise doit figurer dans le récapitulatif avant le paiement."],
+    ...(edition.extraFacts ?? []).map(fact => [fact.label, fact.value]),
+    ["Validation", edition.validationNote ?? "La remise doit figurer dans le récapitulatif avant le paiement."],
     ["Avantage du parrain", offer.benefitToReferrer],
   ].filter((row): row is string[] => Boolean(row[1]));
   return <article className={`shell page-frame ${styles.article}`}>
@@ -42,7 +43,7 @@ export function OfferArticle({ offer, edition, category, children }: {
       </div>
       <section className={styles.card} aria-label="Code et avantage du filleul">
         <div className={styles.market}>{edition.market}</div>
-        <h2>{edition.discount} <span>de réduction pour le filleul</span></h2>
+        <h2>{edition.discount} <span>{edition.rewardLabel ?? "de réduction pour le filleul"}</span></h2>
         <ReferralCodeBox code={offer.referralCode} url={offer.referralUrl} brand={offer.brandName} disclosure={offer.disclosure}/>
         {minimum && <p className={styles.threshold}>Minimum de {minimum} en un seul transfert. <small>{edition.minimumNote}</small></p>}
         <a href={edition.officialSite} className={styles.official}>Site officiel de {offer.brandName} <ExternalLink size={15} aria-hidden/></a>

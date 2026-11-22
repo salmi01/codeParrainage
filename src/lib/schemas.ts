@@ -35,6 +35,8 @@ export const offerSchema = z.object({
   editorial: z.object({
     seoTitle: text, shortTitle: text, market: text, discount: text, answer: text,
     minimumNote: text, observation: text, officialSite: secureUrl,
+    rewardLabel: text.optional(), validationNote: text.optional(),
+    extraFacts: z.array(z.object({ label: text, value: text })).optional(),
   }).optional(),
 }).strict().superRefine((offer, ctx) => {
   const issue = (message: string) => ctx.addIssue({ code: "custom", message });
@@ -48,8 +50,9 @@ export const offerSchema = z.object({
   if ((offer.status === "active" || publishesInvitation) && (!offer.ownerConfirmation || !offer.publicSharingEvidence))
     issue("Attribution et diffusion publique à confirmer");
   if (offer.status === "active") {
-    if (!offer.verifiedAt || !offer.sources.some(s => s.url === offer.officialUrl && s.checkedAt === offer.verifiedAt))
-      issue("Une offre active exige une source officielle consultée à la date de vérification");
+    const evidenceDate = offer.verifiedAt;
+    if (!evidenceDate || !offer.sources.some(s => s.url === offer.officialUrl && s.checkedAt >= evidenceDate))
+      issue("Une offre active exige des règles officielles contrôlées à la date de la preuve ou ultérieurement");
     if (!offer.eligibilityCountries.length || !offer.conditions.length || !offer.benefitToInvitee)
       issue("Éligibilité, avantage du filleul et conditions requis");
     if (!offer.referralCode && !offer.referralUrl) issue("Code ou lien personnel requis");
