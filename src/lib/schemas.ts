@@ -37,7 +37,8 @@ export const offerSchema = z.object({
     seoTitle: text, shortTitle: text, market: text, discount: text, answer: text,
     minimumNote: text, observation: text, officialSite: secureUrl,
     rewardLabel: text.optional(), validationNote: text.optional(),
-    extraFacts: z.array(z.object({ label: text, value: text })).optional(),
+    showVerificationDate: z.boolean().optional(),
+    extraFacts: z.array(z.object({ label: text, value: text, url: officialUrl.optional() })).optional(),
   }).optional(),
 }).strict().superRefine((offer, ctx) => {
   const issue = (message: string) => ctx.addIssue({ code: "custom", message });

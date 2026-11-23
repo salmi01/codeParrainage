@@ -22,7 +22,7 @@ export function OfferArticle({ offer, edition, category, children }: {
   const minimum = offer.minimumTransfer && offer.currency && Number.isFinite(Number(offer.minimumTransfer))
     ? new Intl.NumberFormat("fr", { style: "currency", currency: offer.currency, maximumFractionDigits: 2, minimumFractionDigits: 0 }).format(Number(offer.minimumTransfer))
     : offer.minimumTransfer;
-  const facts = [
+  const facts: [string, React.ReactNode][] = [
     ["Service", offer.brandName],
     ["Avantage du filleul", offer.benefitToInvitee],
     ["Code personnel", offer.referralCode],
@@ -30,10 +30,11 @@ export function OfferArticle({ offer, edition, category, children }: {
     ["Pays concernés", offer.geographicScopeNote],
     ["Pays d’envoi documenté", offer.sendingCountries?.map(countryName).join(", ")],
     ["Minimum de l’offre", minimum ? `${minimum} en un seul envoi. ${edition.minimumNote}` : edition.minimumNote],
-    ...(edition.extraFacts ?? []).map(fact => [fact.label, fact.value]),
+    ...(edition.extraFacts ?? []).map((fact): [string, React.ReactNode] =>
+      [fact.label, fact.url ? <a href={fact.url} className={styles.official}>{fact.value}</a> : fact.value]),
     ["Validation", edition.validationNote ?? "La remise doit figurer dans le récapitulatif avant le paiement."],
     ["Avantage du parrain", offer.benefitToReferrer],
-  ].filter((row): row is string[] => Boolean(row[1]));
+  ];
   return <article className={`shell page-frame ${styles.article}`}>
     <Breadcrumbs items={[category, { label: edition.shortTitle, href }]}/>
     <header className={styles.hero}>
@@ -41,6 +42,7 @@ export function OfferArticle({ offer, edition, category, children }: {
         <Link href={category.href} className="eyebrow"><Send size={15} aria-hidden/> {category.label}</Link>
         <h1>{offer.title}</h1>
         <p>{edition.answer}</p>
+        {edition.showVerificationDate && offer.verifiedAt && <small>Conditions vérifiées le <time dateTime={offer.verifiedAt}>{formatDate(offer.verifiedAt)}</time></small>}
       </div>
       <section className={styles.card} aria-label="Code et avantage du filleul">
         <div className={styles.market}>{edition.market}</div>
@@ -57,7 +59,7 @@ export function OfferArticle({ offer, edition, category, children }: {
     </nav>
     <div className={styles.body}>
       <section id="reperes"><h2>L’offre en bref</h2>
-        <table className={styles.facts} aria-label={"Informations essentielles · " + edition.market}><tbody>{facts.map(([label,value]) =>
+        <table className={styles.facts} aria-label={"Informations essentielles · " + edition.market}><tbody>{facts.filter(([, value]) => Boolean(value)).map(([label,value]) =>
           <tr key={label}><th scope="row">{label}</th><td>{value}</td></tr>)}</tbody></table>
       </section>
       <div id="utilisation" className="prose"><Markdown>{body}</Markdown></div>
