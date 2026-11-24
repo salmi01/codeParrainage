@@ -13,7 +13,8 @@
     "typecheck": "next typegen && tsc --noEmit",
     "validate": "tsx scripts/validate.ts",
     "test": "tsx --test tests/*.test.ts",
-    "test:browser": "playwright test"
+    "test:browser": "playwright test",
+    "audit:discovery": "node scripts/check-discovery.mjs"
   },
   "dependencies": {
     "@fontsource/dm-sans": "^5",

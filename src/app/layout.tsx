@@ -13,6 +13,10 @@ import { siteUrl } from "@/lib/seo";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
+  icons: {
+    icon: [{ url: "/favicon-96x96.png", sizes: "96x96", type: "image/png" }],
+    apple: [{ url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" }],
+  },
   verification: { google: process.env.GOOGLE_SITE_VERIFICATION,
     other: process.env.BING_SITE_VERIFICATION ? { "msvalidate.01": process.env.BING_SITE_VERIFICATION } : undefined },
 };
